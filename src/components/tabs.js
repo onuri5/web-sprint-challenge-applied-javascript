@@ -14,19 +14,21 @@ const Tabs = (topics) => {
   // </div>
   //
   const container = document.createElement('div');
+  container.classList.add('topics');
  
   topics.forEach(item => {
+    //creates a new div element
     const arrItem = document.createElement('div');
+    //fills the div with string in the array
     arrItem.textContent = item;
+    //adds the correct class to the div
     arrItem.classList.add('tab');
+    //appends the div to the container div
     container.appendChild(arrItem);
-  })
+  });
 
-  console.log(container.innerHTML);
   return container;
 }
-
-Tabs(['javascript', 'bootstrap', 'technology']);
 
 const tabsAppender = (selector) => {
   // TASK 4
@@ -41,9 +43,14 @@ const tabsAppender = (selector) => {
   const temp = axios.get('http://localhost:5000/api/topics');
   temp
   .then (res => {
-    const topics = res.data.topics
+    //Sets topics equal to the array of topics inside the data
+    const topics = res.data.topics;
+    //Call Tabs function pass in topics, then append that to our element
     element.appendChild(Tabs(topics));
   })
+  .catch (err => {
+    console.error(err);
+  });
 }
 
 export { Tabs, tabsAppender }

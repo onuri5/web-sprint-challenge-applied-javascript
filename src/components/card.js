@@ -18,6 +18,8 @@ const Card = (article) => {
   // </div>
   //
 
+  //Sets up basic card structure
+
   const container = document.createElement('div');
   const headline = document.createElement('div');
   const author = document.createElement('div');
@@ -56,14 +58,19 @@ const cardAppender = (selector) => {
   const data = axios.get('http://localhost:5000/api/articles');
   data
   .then(res => {
-    const topics = res.data.articles;
-    for (let key in topics) {
-      let firstObj = topics[key];
-      for (let key2 in firstObj) {
-        let finalObj = firstObj[key2];
-        element.appendChild(Card(finalObj));
+    // set articlesObj equal to the object at this data point
+    const articlesObj = res.data.articles;
+    //loop through the articlesObj
+    for (let key in  articlesObj) {
+      // for each Obj in articlesObj sets secondObj to the object
+      let secondObj =  articlesObj[key];
+      // loops through secondObj
+      for (let key2 in secondObj) {
+        //sets article equal to secondObj[key2] which is the object containing the data we need
+        let article = secondObj[key2];
+        //pass article into our Card function and append that to our element
+        element.appendChild(Card(article));
       }
-      
     }
   })
   .catch(err => {
